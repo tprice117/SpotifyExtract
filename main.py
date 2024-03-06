@@ -81,7 +81,7 @@ def save_discovery_weekly():
             saved_weekly_playlist_id = playlist['id']           
              
     if not discover_weekly_playlist_id:
-        return 'Discover Weekly not found'
+        return('Discovery Playlist not found.')
     
     if not saved_weekly_playlist_id:
         new_playlist = sp.user_playlist_create(user_id, 'Saved Weekly', True)
@@ -90,6 +90,7 @@ def save_discovery_weekly():
     discover_weekly_playlist = sp.playlist_items(discover_weekly_playlist_id)
     song_uris = []
     for song in discover_weekly_playlist['items']:
+        
         song_uri = song['track']['uri']
         song_uris.append(song_uri)
         
@@ -106,7 +107,7 @@ def create_spotify_oath():
         client_id=client_id,
         client_secret=client_secret,
         redirect_uri=url_for('redirect_page', _external=True),
-        scope = 'user-library-read playlist-modify-public playlist-modify-private'
+        scope = 'user-library-read playlist-modify-public playlist-modify-private playlist-read-private'
     )
 
 
