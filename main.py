@@ -1,14 +1,9 @@
 import requests
-import subprocess
 import spotipy
-import base64
 import os
 from requests import post
-import json
-import dotenv
 from dotenv import load_dotenv
 from flask import Flask, redirect, request, jsonify, session, url_for
-import urllib.parse
 import datetime
 from spotipy.oauth2 import SpotifyOAuth
 import time
