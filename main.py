@@ -77,14 +77,14 @@ def save_discovery_weekly():
     for playlist in cur_playlists:
         if(playlist['name'] == 'Discover Weekly'):
             discover_weekly_playlist_id = playlist['id']
-        if(playlist['name'] == 'Saved Weekly'):
+        if(playlist['name'] == 'Saved Discovery Weekly'):
             saved_weekly_playlist_id = playlist['id']           
              
     if not discover_weekly_playlist_id:
         return('Discovery Playlist not found.')
     
     if not saved_weekly_playlist_id:
-        new_playlist = sp.user_playlist_create(user_id, 'Saved Weekly', True)
+        new_playlist = sp.user_playlist_create(user_id, 'Saved Discovery Weekly', True)
         saved_weekly_playlist_id = new_playlist['id']
         
     discover_weekly_playlist = sp.playlist_items(discover_weekly_playlist_id)
@@ -95,7 +95,7 @@ def save_discovery_weekly():
         song_uris.append(song_uri)
         
     sp.user_playlist_add_tracks(user_id, saved_weekly_playlist_id, song_uris, None)
-    return('Discovery weekly songs added to Saved Weekly')
+    return('Discovery weekly songs added to Saved Discovery Weekly')
     # return("OATH SUCCESSFUL")
 
 @app.route('/artist-lookup')
