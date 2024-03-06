@@ -70,7 +70,37 @@ def save_discovery_weekly():
     except:
         print("User not Logged in")
         return redirect('/')
-    return("OATH SUCCESSFUL")
+    
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+
+    user_id = sp.current_user()['id']
+    
+    cur_playlists = sp.current_user_playlists()['items']
+    saved_weekly_playlist_id = None
+    discover_weekly_playlist_id = None
+
+    for playlist in cur_playlists:
+        if(playlist['name'] == 'Discover Weekly'):
+            discover_weekly_playlist_id = playlist['id']
+        if(playlist['name'] == 'Saved Weekly'):
+            saved_weekly_playlist_id = playlist['id']           
+             
+    if not discover_weekly_playlist_id:
+        return 'Discover Weekly not found'
+    
+    if not saved_weekly_playlist_id:
+        new_playlist = sp.user_playlist_create(user_id, 'Saved Weekly', True)
+        saved_weekly_playlist_id = new_playlist['id']
+        
+    discover_weekly_playlist = sp.playlist_items(discover_weekly_playlist_id)
+    song_uris = []
+    for song in discover_weekly_playlist['items']:
+        song_uri = song['track']['uri']
+        song_uris.append(song_uri)
+        
+    sp.user_playlist_add_tracks(user_id, saved_weekly_playlist_id, song_uris, None)
+    return('Discovery weekly songs added to Saved Weekly')
+    # return("OATH SUCCESSFUL")
 
 @app.route('/artist-lookup')
 def artist_lookup():
