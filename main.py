@@ -26,7 +26,7 @@ app.secret_key = '234234234234'
 @app.route('/')
 def index():
     return "<a href='/login'> Login with Spotify</a><br> \
-            <a href='/artist-lookup'> See Top songs of X Artist</a>"
+            # <a href='/artist-lookup'> See Top songs of X Artist</a>"
 
 @app.route('/login')
 def login():
